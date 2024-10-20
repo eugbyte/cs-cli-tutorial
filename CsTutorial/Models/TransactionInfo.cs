@@ -2,6 +2,6 @@
 
 namespace CsTutorial.Models;
 
-public record class TransactionInfo(string Date, string Id, string Type, decimal Amount) {
+public record class TransactionInfo(string DateStr, string Id, string Action, decimal Amount) {
     public string DateStringFormat { get; } = "yyyyMMdd";
 };

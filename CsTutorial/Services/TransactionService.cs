@@ -14,7 +14,7 @@ public class TransactionService {
         return transactions[accountId];
     }
 
-    public void AddTransaction(string dateStr, string accountId, string action, decimal amount) {
+    public TransactionInfo AddTransaction(string dateStr, string accountId, string action, decimal amount) {
         if (action == "W") {
             amount *= -1;
         }
@@ -32,10 +32,11 @@ public class TransactionService {
         string transactionId = CreateTransactionId(accountId, dateStr);
         TransactionInfo transaction = new(dateStr, transactionId, action, amount);
 
-        if (!transactions.ContainsKey(transactionId)) {
-            transactions[transactionId] = [];
+        if (!transactions.ContainsKey(accountId)) {
+            transactions[accountId] = [];
         }
-        transactions[transactionId].Add(transaction);
+        transactions[accountId].Add(transaction);
+        return transaction;
     }
 
     private string CreateTransactionId(string accountId, string dateStr) {
