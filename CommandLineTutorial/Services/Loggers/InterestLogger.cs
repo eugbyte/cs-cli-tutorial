@@ -1,18 +1,17 @@
-﻿using CsTutorial.Models;
+﻿using CommandLineTutorial.Models;
 
-namespace CsTutorial.Services;
+namespace CommandLineTutorial.Services.Loggers;
 
 public class InterestLogger {
-    public static string Log(IList<InterestInfo> interestInfos)
-    {
+    public static string LogInterestRates(IList<InterestInfo> interestInfos) {
         const string fmt = "|{0, -10} | {1, -15} | {2, -10}|";
         string header = string.Format(fmt, "Date", "RuleId", "Rate (%)");
         List<string> rows = interestInfos
             .Select(info => {
-                string dateStr = info.Date.ToString(InterestInfo.DateStringFormat);
+                string dateStr = info.Start.ToString(InterestInfo.DateStringFormat);
                 return string.Format(fmt, dateStr, info.Id, info.InterestRate);
             })
             .ToList();
-        return string.Join("\n", [header, ..rows]);
+        return string.Join("\n", [header, .. rows]);
     }
 }
