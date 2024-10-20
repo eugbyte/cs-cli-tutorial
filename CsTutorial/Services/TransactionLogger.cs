@@ -8,7 +8,6 @@ public  class TransactionLogger {
         List<string> rows = transactionInfos
             .Select(info => string.Format("|{0, -10} | {1, -15} | {2, -10} | {3, -10}|", info.DateStr, info.Id, info.Action, info.Amount))
             .ToList();
-        rows.Insert(0, header);
-        return string.Join("\n", rows);
+        return string.Join("\n", [header, .. rows]);
     }
 }
