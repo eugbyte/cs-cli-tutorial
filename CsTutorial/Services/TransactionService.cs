@@ -12,11 +12,11 @@ public class TransactionService {
 
     public List<TransactionInfo> GetTransactions(string accountId) {
         return transactions[accountId]
-            .OrderBy((v) => v.DateStr)
+            .OrderBy((v) => v.Date)
             .ToList();
     }
 
-    public TransactionInfo AddTransaction(string dateStr, string accountId, string action, decimal amount) {
+    public TransactionInfo AddTransaction(DateTime date, string accountId, string action, decimal amount) {
         if (action == "W") {
             amount *= -1;
         }
@@ -31,8 +31,8 @@ public class TransactionService {
         }
         balances[accountId] += amount;
 
-        string transactionId = CreateTransactionId(accountId, dateStr);
-        TransactionInfo transaction = new(dateStr, transactionId, action, amount);
+        string transactionId = CreateTransactionId(accountId, date);
+        TransactionInfo transaction = new(date, transactionId, action, amount);
 
         if (!transactions.ContainsKey(accountId)) {
             transactions[accountId] = [];
@@ -41,7 +41,8 @@ public class TransactionService {
         return transaction;
     }
 
-    private string CreateTransactionId(string accountId, string dateStr) {
+    private string CreateTransactionId(string accountId, DateTime date) {
+        string dateStr = date.ToString(TransactionInfo.DateStringFormat);
         if (!transactionCounts.ContainsKey(accountId)) {
             transactionCounts[accountId] = new();
         }

@@ -32,11 +32,12 @@ Welcome to Awesome Bank! What would you like to do?
             string amountStr = details[3];
             decimal amount = decimal.Parse(amountStr);
 
-            if (!DateTime.TryParseExact(dateStr, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _)) {
+            DateTime date = DateTime.Now;
+            if (!DateTime.TryParseExact(dateStr, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)) {
                 throw new ArgumentException("Wrong date format");
             }
 
-            transactionService.AddTransaction(dateStr, accountId, action, amount);
+            transactionService.AddTransaction(date, accountId, action, amount);
             IList<TransactionInfo> transactionInfos = transactionService.GetTransactions(accountId);
             Console.WriteLine($"Account: {accountId}\n{TransactionLogger.Log(transactionInfos)}");
             break;
@@ -54,11 +55,12 @@ Welcome to Awesome Bank! What would you like to do?
             string interestRateStr = details[2];
             decimal interestRate = decimal.Parse(interestRateStr);
 
-            if (!DateTime.TryParseExact(dateStr, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _)) {
+            date = DateTime.Now;
+            if (!DateTime.TryParseExact(dateStr, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)) {
                 throw new ArgumentException("Wrong date format");
             }
 
-            interestService.AddInterest(dateStr, ruleId, interestRate);
+            interestService.AddInterest(date, ruleId, interestRate);
             IList<InterestInfo> interests = interestService.GetInterests();
             Console.WriteLine($"Interest rules: \n{InterestLogger.Log(interests)}");
             break;
@@ -73,7 +75,7 @@ Welcome to Awesome Bank! What would you like to do?
             string month = dateStr.Substring(4, 2);
 
             transactionInfos = transactionService.GetTransactions(accountId)
-                .Where((info) => Regex.IsMatch(info.DateStr, @$"^{year}{month}"))
+                .Where((info) => info.Date.Year == int.Parse(year) && info.Date.Month == int.Parse(month))
                 .ToList(); ;
             Console.WriteLine($"Account: {accountId}\n{TransactionLogger.Log(transactionInfos)}");
             break;

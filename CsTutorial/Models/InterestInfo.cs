@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CsTutorial.Models;
-public record InterestInfo(string DateStr, string Id, decimal InterestRate) {
-    public string DateStringFormat { get; } = "yyyyMMdd";
+public record InterestInfo(DateTime Date, string Id, decimal InterestRate) {
+    public static string DateStringFormat { get; } = "yyyyMMdd";
 }

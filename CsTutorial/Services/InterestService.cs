@@ -5,22 +5,22 @@ using System.Transactions;
 namespace CsTutorial.Services;
 
 public class InterestService {
-    // composite id (dateStr + ruleId) against InterestInfo
-    private readonly Dictionary<string, InterestInfo> interests = new();
+    // Date against InterestInfo
+    private readonly Dictionary<DateTime, InterestInfo> interests = new();
 
     public List<InterestInfo> GetInterests() {
         return interests
             .Values
-            .OrderBy((v) => v.DateStr)
+            .OrderBy((v) => v.Date)
             .ToList();
     }
 
-    public InterestInfo AddInterest(string dateStr, string ruleId, decimal interestRate) {
+    public InterestInfo AddInterest(DateTime date, string ruleId, decimal interestRate) {
         if (!IsValidInterest(interestRate)) {
             throw new ArgumentException("Invalid interest rate");
         }
-        interests[dateStr] = new InterestInfo(dateStr, ruleId, interestRate);
-        return interests[dateStr];
+        interests[date] = new InterestInfo(date, ruleId, interestRate);
+        return interests[date];
     }
 
     private static bool IsValidInterest(decimal interestRate) {
@@ -34,8 +34,7 @@ public class InterestService {
         for (int i = 0; i < transactions.Count; i++) {
             TransactionInfo transaction = transactions[i];
 
-            DateTime date;
-            DateTime.TryParseExact(transaction.DateStr, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+            DateTime date = transaction.Date;
 
             if (date > start) {
                 break;
@@ -51,13 +50,12 @@ public class InterestService {
 
         List<InterestInfo> interestInfos = interests
             .Values
-            .OrderBy(v => v.DateStr)
+            .OrderBy(v => v.Date)
             .ToList();
 
         for (int i = 0; i < interestInfos.Count; i++) { 
             InterestInfo interestInfo = interestInfos[i];
-            DateTime date;
-            DateTime.TryParseExact(interestInfo.DateStr, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+            DateTime date = interestInfo.Date;
 
             if (date <= start) {
                 interestRates[0] = interestInfo.InterestRate;
