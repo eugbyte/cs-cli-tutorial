@@ -3,8 +3,6 @@
 namespace CsTutorial.Services;
 
 public class TransactionService {
-    // accountId against account balance
-    private readonly Dictionary<string, decimal> balances = new();
     // date string against count
     private readonly Dictionary<string, Dictionary<string, int>> transactionCounts = new();
     // accountId against a list of transactions
@@ -21,22 +19,17 @@ public class TransactionService {
             amount *= -1;
         }
 
-        if (!balances.ContainsKey(accountId))
-        {
-            balances[accountId] = 0;
-        }
-
-        if (balances[accountId] + amount < 0) {
-            throw new ArgumentException("Balance cannot be less than 0");
-        }
-        balances[accountId] += amount;
-
-        string transactionId = CreateTransactionId(accountId, date);
-        TransactionInfo transaction = new(date, transactionId, action, amount);
-
         if (!transactions.ContainsKey(accountId)) {
             transactions[accountId] = [];
         }
+        decimal prevBalance = transactions[accountId].Count == 0 ? 0 : transactions[accountId].Last().LatestBalance;
+        if (prevBalance + amount < 0) {
+            throw new ArgumentException("Negative balance not allowed");
+        }
+
+        string transactionId = CreateTransactionId(accountId, date);
+        TransactionInfo transaction = new(date, transactionId, action, amount, prevBalance + amount);
+        
         transactions[accountId].Add(transaction);
         return transaction;
     }

@@ -62,7 +62,7 @@ Welcome to Awesome Bank! What would you like to do?
 
             interestService.AddInterest(date, ruleId, interestRate);
             IList<InterestInfo> interests = interestService.GetInterests();
-            Console.WriteLine($"Interest rules: \n{InterestLogger.Log(interests)}");
+            Console.WriteLine($"Interest rules: \n{InterestLogger.LogInterestRates(interests)}");
             break;
         case "P":
             Console.WriteLine("Please enter account and month to generate the statement <Account> <Year><Month>\r\n(or enter blank to go back to main menu):");
