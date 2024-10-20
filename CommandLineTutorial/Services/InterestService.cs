@@ -25,7 +25,7 @@ public class InterestService {
 			};
 			interests[prevInfo.Start] = prevInfo;
 		}
-		interests[start] = new InterestInfo(ruleId, interestRate, start);
+		interests[start] = new InterestInfo(ruleId, interestRate, start, DateTime.Now);
 
 		prevInfo = interests[start];
 		return interests[start];
@@ -52,6 +52,12 @@ public class InterestService {
 			}
 		}
 
+		if (balances.Count > 0) {
+			balances[balances.Count - 1] = balances[balances.Count - 1] with { 
+				End = DateTime.Now
+			};
+		}
+
 		decimal total = 0;
 		// 1. Two pointers, same direction
 		// 2. Find overlaps between the two list of intervals
@@ -64,10 +70,10 @@ public class InterestService {
 			InterestInfo interest = interestInfos[indexI];
 			BalanceInfo balance = balances[indexB];
 
-			bool isOverlap = interest.Start <= balance.End && balance.Start <= interest.End;
+			bool isOverlap = interest.Start <= balance.End && balance.Start <= (interest.End ?? DateTime.Now);
 			if (isOverlap) {
 				DateTime overlapStart = new List<DateTime> { interest.Start, balance.Start }.Max();
-				DateTime overlapEnd = new List<DateTime> { interest.End ?? new DateTime(), balance.End }.Min();
+				DateTime overlapEnd = new List<DateTime> { interest.End ?? DateTime.Now, balance.End }.Min();
 				int days = (overlapEnd - overlapStart).Days;
 
 				decimal amount = balance.Balance * interest.InterestRate * days;
