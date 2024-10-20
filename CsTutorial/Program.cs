@@ -1,7 +1,7 @@
 ﻿using CsTutorial.Models;
 using CsTutorial.Services;
+using CsTutorial.Services.Loggers;
 using System.Globalization;
-using System.Text.RegularExpressions;
 
 TransactionService transactionService = new();
 InterestService interestService = new();
@@ -71,13 +71,19 @@ Welcome to Awesome Bank! What would you like to do?
 
             accountId = details[0];
             dateStr = details[1];
-            string year = dateStr[..4];
-            string month = dateStr.Substring(4, 2);
+            int year = int.Parse(dateStr[..4]);
+            int month = int.Parse(dateStr.Substring(4, 2));
 
             transactionInfos = transactionService.GetTransactions(accountId)
-                .Where((info) => info.Date.Year == int.Parse(year) && info.Date.Month == int.Parse(month))
-                .ToList(); ;
+                .Where((info) => info.Date.Year == year && info.Date.Month == month)
+                .ToList();
             Console.WriteLine($"Account: {accountId}\n{TransactionLogger.Log(transactionInfos)}");
+
+            DateTime start = new(year: year, month: month, day: 1);
+            DateTime end = new(year: year, month: month, day: 30);
+            
+            decimal interest = interestService.CalculateInterest(transactionInfos, start, end);
+            Console.WriteLine($"Account: {accountId}\n{BalanceLoger.Log(transactionInfos, dateStr, interest)}");
             break;
         default:
             continue;

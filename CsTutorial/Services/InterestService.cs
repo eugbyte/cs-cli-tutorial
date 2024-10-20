@@ -1,5 +1,4 @@
 ﻿using CsTutorial.Models;
-using System;
 
 namespace CsTutorial.Services;
 
@@ -39,28 +38,26 @@ public class InterestService {
     public decimal CalculateInterest(IList<TransactionInfo> transactions, DateTime start, DateTime end) {
         List<InterestInfo> interestInfos = interests
             .Values
-            .Where((v) => v.End == null || v.End >= start)
+            .Where((v) => v.End == null || v.Start <= end && start <= v.End)
             .OrderBy((v) => v.Start)
             .ToList();
 
         List<BalanceInfo> balances = [];
         for (int i = 0; i < transactions.Count; i++) {
-            bool inRange = start <= transactions[i].Date && transactions[i].Date <= end;
-            if (inRange) {
+            TransactionInfo transactionInfo = transactions[i];
+            if (start <= transactions[i].Date && transactions[i].Date <= end) {
                 DateTime _start = transactions[i].Date;
                 DateTime _end = i + 1 < transactions.Count ? transactions[i + 1].Date : transactions[i].Date;
                 balances.Add(new BalanceInfo(_start, _end, transactions[i].Amount));
             }
         }
 
-        balances = balances
-            .OrderBy((v) => v.Start)
-            .ToList();
-
         decimal total = 0;
-        // 2 pointers, same direction
-        // everytime there is an overlap, we add to total amount
+        // 1. Two pointers, same direction
+        // 2. Find overlaps between the two list of intervals
+        // 3. Everytime there is an overlap, we calculate interest and add to total amount
         int indexI = 0; // index for interest
+
         int indexB = 0; // index for balance
 
         while (indexI < interestInfos.Count && indexB < balances.Count) {
@@ -69,9 +66,9 @@ public class InterestService {
 
             bool isOverlap = interest.Start <= balance.End && balance.Start <= interest.End;
             if (isOverlap) {
-                DateTime _start = new List<DateTime> { interest.Start , balance.Start }.Max();
-                DateTime _end = new List<DateTime> { interest.End ?? new DateTime(), balance.End }.Min();
-                int days = (_end - _start).Days;
+                DateTime overlapStart = new List<DateTime> { interest.Start , balance.Start }.Max();
+                DateTime overlapEnd = new List<DateTime> { interest.End ?? new DateTime(), balance.End }.Min();
+                int days = (overlapEnd - overlapStart).Days;
 
                 decimal amount = balance.Balance * interest.InterestRate * days;
                 amount /= 365;
