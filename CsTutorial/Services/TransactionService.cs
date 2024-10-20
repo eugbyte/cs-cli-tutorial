@@ -11,7 +11,9 @@ public class TransactionService {
     private readonly Dictionary<string, List<TransactionInfo>> transactions = new();
 
     public List<TransactionInfo> GetTransactions(string accountId) {
-        return transactions[accountId];
+        return transactions[accountId]
+            .OrderBy((v) => v.DateStr)
+            .ToList();
     }
 
     public TransactionInfo AddTransaction(string dateStr, string accountId, string action, decimal amount) {

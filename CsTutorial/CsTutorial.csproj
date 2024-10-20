@@ -15,8 +15,4 @@
     <None Include="C:\Users\eugen\Codes\personal\CsTutorial\CsTutorial\.editorconfig" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Loggers\" />
-  </ItemGroup>
-
 </Project>
