@@ -3,7 +3,7 @@ using CommandLineTutorial.Services;
 using CommandLineTutorial.Services.Loggers;
 using System.Globalization;
 
-namespace CommandLineTutorial.Handler;
+namespace CommandLineTutorial.Handlers;
 
 public class MainHandler(InterestService interestService, TransactionService transactionService) {
 	public void Run() {
@@ -83,7 +83,7 @@ Welcome to Awesome Bank! What would you like to do?
 
 		interestService.AddInterest(date, ruleId, interestRate);
 		IList<InterestInfo> interests = interestService.GetInterests();
-		Console.WriteLine($"Interest rules: \n{InterestLogger.LogInterestRates(interests)}");
+		InterestLogger.Log(interests);
 	}
 
 	private void ProcessSummary() {
