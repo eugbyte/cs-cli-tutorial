@@ -62,7 +62,7 @@ Welcome to Awesome Bank! What would you like to do?
 
 		transactionService.AddTransaction(date, accountId, action, amount);
 		IList<TransactionInfo> transactionInfos = transactionService.GetTransactions(accountId);
-		Console.WriteLine($"Account: {accountId}\n{TransactionLogger.Log(transactionInfos)}");
+		TransactionLogger.Log(accountId, transactionInfos);
 	}
 
 	private void ProcessInterest() {
@@ -100,12 +100,12 @@ Welcome to Awesome Bank! What would you like to do?
 		List<TransactionInfo> transactionInfos = transactionService.GetTransactions(accountId)
 			.Where((info) => info.Date.Year == year && info.Date.Month == month)
 			.ToList();
-		Console.WriteLine($"Account: {accountId}\n{TransactionLogger.Log(transactionInfos)}");
+		TransactionLogger.Log(accountId, transactionInfos);
 
 		DateTime start = new(year: year, month: month, day: 1);
 		DateTime end = new(year: year, month: month, day: 30);
 
 		decimal interest = interestService.CalculateInterest(transactionInfos, start, end);
-		Console.WriteLine($"Account: {accountId}\n{BalanceLoger.Log(transactionInfos, dateStr, interest)}");
+		BalanceLoger.Log(transactionInfos, end, interest);
 	}
 }
