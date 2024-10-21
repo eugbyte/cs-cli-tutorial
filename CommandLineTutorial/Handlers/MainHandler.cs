@@ -51,7 +51,7 @@ Welcome to Awesome Bank! What would you like to do?
 
 		string dateStr = details[0];
 		string accountId = details[1];
-		string action = details[2];
+		string actionStr = details[2];
 		string amountStr = details[3];
 		decimal amount = decimal.Parse(amountStr);
 
@@ -59,6 +59,8 @@ Welcome to Awesome Bank! What would you like to do?
 		if (!DateTime.TryParseExact(dateStr, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)) {
 			throw new ArgumentException("Wrong date format");
 		}
+
+		_ = Enum.TryParse(actionStr, out ACTION action);
 
 		transactionService.AddTransaction(date, accountId, action, amount);
 		IList<TransactionInfo> transactionInfos = transactionService.GetTransactions(accountId);

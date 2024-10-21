@@ -1,5 +1,14 @@
-﻿namespace CommandLineTutorial.Models;
+﻿using System.ComponentModel;
 
-public record TransactionInfo(DateTime Date, string Id, string Action, decimal Amount, decimal LatestBalance) {
+namespace CommandLineTutorial.Models;
+
+public record TransactionInfo(DateTime Date, string Id, ACTION Action, decimal Amount, decimal LatestBalance) {
     public static string DateStringFormat { get; } = "yyyyMMdd";
 };
+
+public enum ACTION {
+	[Description("Deposit")]
+	D = 0,
+	[Description("Withdraw")]
+	W = 1,
+}

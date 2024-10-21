@@ -14,8 +14,8 @@ public class TransactionService {
 			.ToList();
 	}
 
-	public TransactionInfo AddTransaction(DateTime date, string accountId, string action, decimal amount) {
-		if (action == "W") {
+	public TransactionInfo AddTransaction(DateTime date, string accountId, ACTION action, decimal amount) {
+		if (action == ACTION.W) {
 			amount *= -1;
 		}
 
