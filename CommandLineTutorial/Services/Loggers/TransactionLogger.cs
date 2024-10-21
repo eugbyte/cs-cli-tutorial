@@ -3,7 +3,7 @@
 namespace CommandLineTutorial.Services.Loggers;
 
 public class TransactionLogger {
-    public static string Log(IList<TransactionInfo> transactionInfos) {
+    public static void Log(string accountId, IList<TransactionInfo> transactionInfos) {
         const string fmt = "|{0, -10} | {1, -15} | {2, -10} | {3, -10}|";
 
         string header = string.Format(fmt, "Date", "Txn Id", "Type", "Amount");
@@ -13,6 +13,7 @@ public class TransactionLogger {
                 return string.Format(fmt, dateStr, info.Id, info.Action, info.Amount);
             })
             .ToList();
-        return string.Join("\n", [header, .. rows]);
-    }
+
+		Console.WriteLine($"Account: {accountId}\n{string.Join("\n", [header, .. rows])}");
+	}
 }
