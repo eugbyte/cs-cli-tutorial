@@ -5,6 +5,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{76542A8D-8CFA-4BEC-BB0C-D0CE6CC43280}"
 	ProjectSection(SolutionItems) = preProject
 		bank-account-interest.md = bank-account-interest.md
+		Makefile = Makefile
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5D582317-68E5-42A1-884B-290DA76B9793}"
@@ -13,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C78601C9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandLineTutorial", "src\CommandLineTutorial\CommandLineTutorial.csproj", "{67F7D079-F283-4B02-8DEF-24617BEBA7FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandLineTutorial.Test", "CommandLineTutorial.Test\CommandLineTutorial.Test.csproj", "{73AFC9BD-9B3C-49D3-98F0-7B64F92D3E8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandLineTutorial.Test", "CommandLineTutorial.Test\CommandLineTutorial.Test.csproj", "{73AFC9BD-9B3C-49D3-98F0-7B64F92D3E8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

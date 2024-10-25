@@ -4,8 +4,6 @@ using CommandLineTutorial.Services;
 namespace CommandLineTutorial.Test.Services;
 
 public class TestInterestService {
-	private readonly string accountId = "AC001";
-
 	[Fact]
 	public void Add_Interest() {
 		InterestService interestService = new();
@@ -13,6 +11,15 @@ public class TestInterestService {
 		DateTime date = new(year: 2024, month: 6, day: 1);
 		string ruleId = "RULE01";
 		interestService.AddInterest(date, ruleId, 10);
+	}
+
+	[Fact]
+	public void Invalid_Interest_Throw() {
+		InterestService interestService = new();
+
+		DateTime date = new(year: 2024, month: 6, day: 1);
+		string ruleId = "RULE01";
+		Assert.Throws<ArgumentException>(() => interestService.AddInterest(date, ruleId, 0));
 	}
 
 	[Fact]
@@ -74,7 +81,7 @@ public class TestInterestService {
 	}
 
 	[Fact]
-	public void Calculated_Interest_3() {
+	public void Calculated_Interest_3_Overlaps() {
 		InterestService interestService = new();
 
 		DateTime start = new(year: 2024, month: 6, day: 1);

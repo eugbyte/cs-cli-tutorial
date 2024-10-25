@@ -1,5 +1,5 @@
 # To run
-`make run`
+`make start`
 
 # To test
 `make test`

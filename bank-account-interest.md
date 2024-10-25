@@ -10,7 +10,7 @@ All the example below assumes console input/output is used.
 
 When launching the application, it prompts user for actions:
 ```
-Welcome to AwesomeGIC Bank! What would you like to do?
+Welcome to Awesome Bank! What would you like to do?
 [T] Input transactions 
 [I] Define interest rules
 [P] Print statement
@@ -140,6 +140,6 @@ q
 
 System responds with:
 ```
-Thank you for banking with AwesomeGIC Bank.
+Thank you for banking with Awesome Bank.
 Have a nice day!
 ```
