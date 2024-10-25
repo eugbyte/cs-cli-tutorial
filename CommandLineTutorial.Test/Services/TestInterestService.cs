@@ -34,64 +34,64 @@ public class TestInterestService {
 	}
 
 	[Fact]
-	public void Calculated_Interest_1() {
+	public void Calculated_Interest_2_IR_Overlaps() {
 		InterestService interestService = new();
 
-		DateTime date1 = new(year: 2024, month: 6, day: 1);
-		interestService.AddInterest(date1, "RULE01", 10);
+		DateTime start = new(year: 2024, month: 6, day: 1);
+		interestService.AddInterest(start, "RULE01", 10);
 
-		DateTime date2 = new(year: 2024, month: 6, day: 15);
+		DateTime date2 = new(year: 2024, month: 6, day: 16);
 		interestService.AddInterest(date2, "RULE02", 20);
 
 		List<TransactionInfo> transactionInfos = [
-			new(Date: date1, TransactionId: "1", Action: ACTION.D, Amount: 1000, LatestBalance: 1000)
+			new(Date: start, TransactionId: "1", Action: ACTION.D, Amount: 1000, LatestBalance: 1000)
 		];
 
-		DateTime date3 = new(year: 2024, month: 6, day: 30);
-		decimal interest = interestService.CalculateInterest(transactionInfos, start: date1, end: date3);
+		DateTime end = new(year: 2024, month: 6, day: 30);
+		decimal interest = interestService.CalculateInterest(transactionInfos, start, end);
 
 		interest = Math.Round(interest, 2);
-		Assert.Equal(12.32m, interest);
+		Assert.Equal(12.33m, interest);
 	}
 
 	[Fact]
-	public void Calculated_Interest_2() {
+	public void Calculated_Interest_2_Balance_Overlaps() {
 		InterestService interestService = new();
 
-		DateTime date1 = new(year: 2024, month: 6, day: 1);
-		interestService.AddInterest(date1, "RULE01", 10);
+		DateTime start = new(year: 2024, month: 6, day: 1);
+		interestService.AddInterest(start, "RULE01", 10);
 
 		List<TransactionInfo> transactionInfos = [
-			new(Date: date1, TransactionId: "1", Action: ACTION.D, Amount: 1000, LatestBalance: 1000),
-			new(Date: new(year: 2024, month: 6, day: 15), TransactionId: "2", Action: ACTION.W, Amount: 500, LatestBalance: 500)
+			new(Date: start, TransactionId: "1", Action: ACTION.D, Amount: 1000, LatestBalance: 1000),
+			new(Date: new(year: 2024, month: 6, day: 16), TransactionId: "2", Action: ACTION.W, Amount: 500, LatestBalance: 500)
 		];
 
-		DateTime date3 = new(year: 2024, month: 6, day: 30);
-		decimal interest = interestService.CalculateInterest(transactionInfos, start: date1, end: date3);
+		DateTime end = new(year: 2024, month: 6, day: 30);
+		decimal interest = interestService.CalculateInterest(transactionInfos, start, end);
 
 		interest = Math.Round(interest, 2);
-		Assert.Equal(12.32m, interest);
+		Assert.Equal(6.16m, interest);
 	}
 
 	[Fact]
 	public void Calculated_Interest_3() {
 		InterestService interestService = new();
 
-		DateTime date1 = new(year: 2024, month: 6, day: 1);
-		interestService.AddInterest(date1, "RULE01", 10);
+		DateTime start = new(year: 2024, month: 6, day: 1);
+		interestService.AddInterest(start, "RULE01", 10);
 
-		DateTime date2 = new(year: 2024, month: 6, day: 10);
+		DateTime date2 = new(year: 2024, month: 6, day: 11);
 		interestService.AddInterest(date2, "RULE02", 20);
 
 		List<TransactionInfo> transactionInfos = [
-			new(Date: new(year: 2024, month: 6, day: 1), TransactionId: "1", Action: ACTION.D, Amount: 1000, LatestBalance: 1000),
-			new(Date: new(year: 2024, month: 6, day: 20), TransactionId: "2", Action: ACTION.W, Amount: 500, LatestBalance: 1000)
+			new(Date: start, TransactionId: "1", Action: ACTION.D, Amount: 1000, LatestBalance: 1000),
+			new(Date: new(year: 2024, month: 6, day: 16), TransactionId: "2", Action: ACTION.W, Amount: 500, LatestBalance: 500)
 		];
 
-		DateTime date3 = new(year: 2024, month: 6, day: 30);
-		decimal interest = interestService.CalculateInterest(transactionInfos, start: date1, end: date3);
+		DateTime end = new(year: 2024, month: 6, day: 30);
+		decimal interest = interestService.CalculateInterest(transactionInfos, start, end);
 
 		interest = Math.Round(interest, 2);
-		Assert.Equal(12.32m, interest);
+		Assert.Equal(9.59m, interest);
 	}
 }

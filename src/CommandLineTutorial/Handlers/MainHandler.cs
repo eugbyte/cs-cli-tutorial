@@ -100,10 +100,10 @@ Welcome to Awesome Bank! What would you like to do?
 		List<TransactionInfo> transactionInfos = transactionService.GetTransactions(accountId)
 			.Where((info) => info.Date.Year == year && info.Date.Month == month)
 			.ToList();
-		TransactionLogger.Log(accountId, transactionInfos);
 
 		DateTime start = new(year: year, month: month, day: 1);
-		DateTime end = new(year: year, month: month, day: 30);
+		int lastDayOfMonth = DateTime.DaysInMonth(start.Year, start.Month);
+		DateTime end = new(year: year, month: month, day: lastDayOfMonth);
 
 		decimal interest = interestService.CalculateInterest(transactionInfos, start, end);
 		BalanceLoger.Log(transactionInfos, end, interest);
