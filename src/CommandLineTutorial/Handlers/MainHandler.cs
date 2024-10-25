@@ -1,11 +1,11 @@
-﻿using CommandLineTutorial.Models;
-using CommandLineTutorial.Services;
+﻿using CommandLineTutorial.Domains.Interfaces;
+using CommandLineTutorial.Domains.Models;
 using CommandLineTutorial.Services.Loggers;
 using System.Globalization;
 
 namespace CommandLineTutorial.Handlers;
 
-public class MainHandler(InterestService interestService, TransactionService transactionService) {
+public class MainHandler(IInterestService interestService, ITransactionService transactionService) {
 	public void Run() {
 		bool shouldRun = true;
 
@@ -51,7 +51,7 @@ Welcome to Awesome Bank! What would you like to do?
 
 		string dateStr = details[0];
 		string accountId = details[1];
-		string action = details[2];
+		string actionStr = details[2];
 		string amountStr = details[3];
 		decimal amount = decimal.Parse(amountStr);
 
@@ -59,6 +59,8 @@ Welcome to Awesome Bank! What would you like to do?
 		if (!DateTime.TryParseExact(dateStr, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)) {
 			throw new ArgumentException("Wrong date format");
 		}
+
+		_ = Enum.TryParse(actionStr, out ACTION action);
 
 		transactionService.AddTransaction(date, accountId, action, amount);
 		IList<TransactionInfo> transactionInfos = transactionService.GetTransactions(accountId);
@@ -75,9 +77,7 @@ Welcome to Awesome Bank! What would you like to do?
 		string ruleId = details[1];
 		string interestRateStr = details[2];
 		decimal interestRate = decimal.Parse(interestRateStr);
-
-		DateTime date = DateTime.Now;
-		if (!DateTime.TryParseExact(dateStr, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)) {
+		if (!DateTime.TryParseExact(dateStr, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date)) {
 			throw new ArgumentException("Wrong date format");
 		}
 

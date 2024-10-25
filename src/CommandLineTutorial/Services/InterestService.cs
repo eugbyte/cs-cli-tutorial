@@ -1,8 +1,9 @@
-﻿using CommandLineTutorial.Models;
+﻿using CommandLineTutorial.Domains.Interfaces;
+using CommandLineTutorial.Domains.Models;
 
 namespace CommandLineTutorial.Services;
 
-public class InterestService {
+public class InterestService : IInterestService {
 	public record BalanceInfo(DateTime Start, DateTime End, decimal Balance);
 	private InterestInfo? prevInfo = null;
 	// Date against InterestInfo
@@ -16,6 +17,8 @@ public class InterestService {
 	}
 
 	public InterestInfo AddInterest(DateTime start, string ruleId, decimal interestRate) {
+		start = new DateTime(year: start.Year, month: start.Month, day: start.Day);
+
 		if (!IsValidInterest(interestRate)) {
 			throw new ArgumentException("Invalid interest rate");
 		}
@@ -42,7 +45,7 @@ public class InterestService {
 			if (start <= transactions[i].Date && transactions[i].Date <= end) {
 				DateTime _start = transactions[i].Date;
 				DateTime _end = i + 1 < transactions.Count ? transactions[i + 1].Date : end;
-				balances.Add(new BalanceInfo(_start, _end, transactions[i].Amount));
+				balances.Add(new BalanceInfo(_start, _end, transactions[i].LatestBalance));
 			}
 		}
 
@@ -51,18 +54,16 @@ public class InterestService {
 			.Where((v) => v.Start <= end && start <= v.End)
 			.OrderBy((v) => v.Start)
 			.ToList();
+		
+		return SumPeriodicInterests(balances, interestInfos);
+	}
 
-		if (interestInfos.Count > 0 && balances.Count > 0) {
-			DateTime minInterestStart = new List<DateTime> { interestInfos[0].Start, balances[0].Start }.Min();
-			interestInfos[0] = interestInfos[0] with { Start = minInterestStart };
-		}
-
+	// 1. Find overlaps between the two list of intervals
+	// 2. Two pointers, same direction
+	// 3. Everytime there is an overlap, we calculate interest and add to total amount
+	private static decimal SumPeriodicInterests(List<BalanceInfo> balances, List<InterestInfo> interestInfos) {
 		decimal total = 0;
-		// 1. Two pointers, same direction
-		// 2. Find overlaps between the two list of intervals
-		// 3. Everytime there is an overlap, we calculate interest and add to total amount
 		int indexI = 0; // index for interest
-
 		int indexB = 0; // index for balance
 
 		while (indexI < interestInfos.Count && indexB < balances.Count) {
@@ -73,9 +74,9 @@ public class InterestService {
 			if (isOverlap) {
 				DateTime overlapStart = new List<DateTime> { interest.Start, balance.Start }.Max();
 				DateTime overlapEnd = new List<DateTime> { interest.End, balance.End }.Min();
-				int days = (overlapEnd - overlapStart).Days;
+				int days = (overlapEnd - overlapStart).Days + 1;
 
-				decimal amount = balance.Balance * interest.InterestRate * days;
+				decimal amount = balance.Balance * (interest.InterestRate / 100) * days;
 				amount /= 365;
 				total += amount;
 			}

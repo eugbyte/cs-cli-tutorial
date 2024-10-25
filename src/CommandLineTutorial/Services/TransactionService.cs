@@ -1,8 +1,9 @@
-﻿using CommandLineTutorial.Models;
+﻿using CommandLineTutorial.Domains.Interfaces;
+using CommandLineTutorial.Domains.Models;
 
 namespace CommandLineTutorial.Services;
 
-public class TransactionService {
+public class TransactionService : ITransactionService {
 	// date string against count
 	private readonly Dictionary<string, Dictionary<string, int>> transactionCounts = new();
 	// accountId against a list of transactions
@@ -14,8 +15,8 @@ public class TransactionService {
 			.ToList();
 	}
 
-	public TransactionInfo AddTransaction(DateTime date, string accountId, string action, decimal amount) {
-		if (action == "W") {
+	public TransactionInfo AddTransaction(DateTime date, string accountId, ACTION action, decimal amount) {
+		if (action == ACTION.W) {
 			amount *= -1;
 		}
 

@@ -1,4 +1,4 @@
-﻿using CommandLineTutorial.Models;
+﻿using CommandLineTutorial.Domains.Models;
 
 namespace CommandLineTutorial.Services.Loggers;
 
@@ -10,7 +10,7 @@ public class TransactionLogger {
         List<string> rows = transactionInfos
             .Select(info => {
                 string dateStr = info.Date.ToString(InterestInfo.DateStringFormat);
-                return string.Format(fmt, dateStr, info.Id, info.Action, info.Amount);
+                return string.Format(fmt, dateStr, info.TransactionId, info.Action, info.Amount);
             })
             .ToList();
 
