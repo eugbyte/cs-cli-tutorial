@@ -24,7 +24,7 @@ public class InterestService : IInterestService {
 		}
 		if (prevInfo != null) {
 			prevInfo = prevInfo with {
-				End = start
+				End = start.AddDays(-1)
 			};
 			interests[prevInfo.Start] = prevInfo;
 		}
@@ -44,7 +44,10 @@ public class InterestService : IInterestService {
 			TransactionInfo transactionInfo = transactions[i];
 			if (start <= transactions[i].Date && transactions[i].Date <= end) {
 				DateTime _start = transactions[i].Date;
-				DateTime _end = i + 1 < transactions.Count ? transactions[i + 1].Date : end;
+				DateTime _end = end;
+				if (i + 1 < transactions.Count) {
+					_end = transactions[i + 1].Date.AddDays(-1);
+				}
 				balances.Add(new BalanceInfo(_start, _end, transactions[i].LatestBalance));
 			}
 		}
@@ -52,9 +55,10 @@ public class InterestService : IInterestService {
 		List<InterestInfo> interestInfos = interests
 			.Values
 			.Where((v) => v.Start <= end && start <= v.End)
+			.Select((v) => v with { End = new List<DateTime> { v.End, end }.Min() })
 			.OrderBy((v) => v.Start)
 			.ToList();
-		
+
 		return SumPeriodicInterests(balances, interestInfos);
 	}
 
@@ -77,7 +81,6 @@ public class InterestService : IInterestService {
 				int days = (overlapEnd - overlapStart).Days + 1;
 
 				decimal amount = balance.Balance * (interest.InterestRate / 100) * days;
-				amount /= 365;
 				total += amount;
 			}
 
@@ -88,6 +91,8 @@ public class InterestService : IInterestService {
 				indexB += 1;
 			}
 		}
+
+		total /= 365;
 		return total;
 	}
 }

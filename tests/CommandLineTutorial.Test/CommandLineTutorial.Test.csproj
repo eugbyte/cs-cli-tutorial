@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\CommandLineTutorial\CommandLineTutorial.csproj" />
+    <ProjectReference Include="..\..\src\CommandLineTutorial\CommandLineTutorial.csproj" />
   </ItemGroup>
 
   <ItemGroup>
