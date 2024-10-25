@@ -2,7 +2,7 @@
 
 namespace CommandLineTutorial.Models;
 
-public record TransactionInfo(DateTime Date, string Id, ACTION Action, decimal Amount, decimal LatestBalance) {
+public record TransactionInfo(DateTime Date, string TransactionId, ACTION Action, decimal Amount, decimal LatestBalance) {
     public static string DateStringFormat { get; } = "yyyyMMdd";
 };
 
