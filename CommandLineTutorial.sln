@@ -4,6 +4,7 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{76542A8D-8CFA-4BEC-BB0C-D0CE6CC43280}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		bank-account-interest.md = bank-account-interest.md
 		Makefile = Makefile
 		README.md = README.md
@@ -15,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C78601C9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandLineTutorial", "src\CommandLineTutorial\CommandLineTutorial.csproj", "{67F7D079-F283-4B02-8DEF-24617BEBA7FB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandLineTutorial.Test", "CommandLineTutorial.Test\CommandLineTutorial.Test.csproj", "{73AFC9BD-9B3C-49D3-98F0-7B64F92D3E8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandLineTutorial.Test", "tests\CommandLineTutorial.Test\CommandLineTutorial.Test.csproj", "{176A0E07-C1E8-4311-A088-783C32DCCD10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,17 +28,17 @@ Global
 		{67F7D079-F283-4B02-8DEF-24617BEBA7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67F7D079-F283-4B02-8DEF-24617BEBA7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67F7D079-F283-4B02-8DEF-24617BEBA7FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73AFC9BD-9B3C-49D3-98F0-7B64F92D3E8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73AFC9BD-9B3C-49D3-98F0-7B64F92D3E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73AFC9BD-9B3C-49D3-98F0-7B64F92D3E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73AFC9BD-9B3C-49D3-98F0-7B64F92D3E8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{176A0E07-C1E8-4311-A088-783C32DCCD10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{176A0E07-C1E8-4311-A088-783C32DCCD10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{176A0E07-C1E8-4311-A088-783C32DCCD10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{176A0E07-C1E8-4311-A088-783C32DCCD10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{67F7D079-F283-4B02-8DEF-24617BEBA7FB} = {5D582317-68E5-42A1-884B-290DA76B9793}
-		{73AFC9BD-9B3C-49D3-98F0-7B64F92D3E8F} = {C78601C9-4D22-45F3-801D-7C8FFF8902AE}
+		{176A0E07-C1E8-4311-A088-783C32DCCD10} = {C78601C9-4D22-45F3-801D-7C8FFF8902AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {38F322A1-A963-47B0-95EB-63E291055D1E}
