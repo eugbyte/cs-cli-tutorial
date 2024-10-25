@@ -58,7 +58,7 @@ public class InterestService : IInterestService {
 			.Select((v) => v with { End = new List<DateTime> { v.End, end }.Min() })
 			.OrderBy((v) => v.Start)
 			.ToList();
-		
+
 		return SumPeriodicInterests(balances, interestInfos);
 	}
 
