@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 
-namespace CommandLineTutorial.Models;
+namespace CommandLineTutorial.Domains.Models;
 
 public record TransactionInfo(DateTime Date, string TransactionId, ACTION Action, decimal Amount, decimal LatestBalance) {
-    public static string DateStringFormat { get; } = "yyyyMMdd";
+	public static string DateStringFormat { get; } = "yyyyMMdd";
 };
 
 public enum ACTION {

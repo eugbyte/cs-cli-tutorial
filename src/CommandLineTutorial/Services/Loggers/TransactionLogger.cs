@@ -1,4 +1,4 @@
-﻿using CommandLineTutorial.Models;
+﻿using CommandLineTutorial.Domains.Models;
 
 namespace CommandLineTutorial.Services.Loggers;
 

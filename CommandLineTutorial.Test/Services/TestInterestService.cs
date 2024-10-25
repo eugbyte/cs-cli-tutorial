@@ -1,4 +1,4 @@
-﻿using CommandLineTutorial.Models;
+﻿using CommandLineTutorial.Domains.Models;
 using CommandLineTutorial.Services;
 
 namespace CommandLineTutorial.Test.Services;

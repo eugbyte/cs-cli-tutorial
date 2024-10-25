@@ -1,8 +1,9 @@
-﻿using CommandLineTutorial.Models;
+﻿using CommandLineTutorial.Domains.Interfaces;
+using CommandLineTutorial.Domains.Models;
 
 namespace CommandLineTutorial.Services;
 
-public class InterestService {
+public class InterestService : IInterestService {
 	public record BalanceInfo(DateTime Start, DateTime End, decimal Balance);
 	private InterestInfo? prevInfo = null;
 	// Date against InterestInfo
