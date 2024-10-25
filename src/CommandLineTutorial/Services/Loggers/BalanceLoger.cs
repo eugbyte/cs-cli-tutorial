@@ -9,7 +9,7 @@ public class BalanceLoger {
 		List<string> rows = transactionInfos
 			.Select(info => {
 				string dateStr = info.Date.ToString(TransactionInfo.DateStringFormat);
-				return string.Format(fmt, dateStr, info.Id, info.Action, info.Amount, info.LatestBalance);
+				return string.Format(fmt, dateStr, info.TransactionId, info.Action, info.Amount, info.LatestBalance);
 			})
 			.ToList();
 

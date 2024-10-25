@@ -16,6 +16,8 @@ public class InterestService {
 	}
 
 	public InterestInfo AddInterest(DateTime start, string ruleId, decimal interestRate) {
+		start = new DateTime(year: start.Year, month: start.Month, day: start.Day);
+
 		if (!IsValidInterest(interestRate)) {
 			throw new ArgumentException("Invalid interest rate");
 		}
@@ -42,7 +44,7 @@ public class InterestService {
 			if (start <= transactions[i].Date && transactions[i].Date <= end) {
 				DateTime _start = transactions[i].Date;
 				DateTime _end = i + 1 < transactions.Count ? transactions[i + 1].Date : end;
-				balances.Add(new BalanceInfo(_start, _end, transactions[i].Amount));
+				balances.Add(new BalanceInfo(_start, _end, transactions[i].LatestBalance));
 			}
 		}
 
@@ -71,7 +73,7 @@ public class InterestService {
 			if (isOverlap) {
 				DateTime overlapStart = new List<DateTime> { interest.Start, balance.Start }.Max();
 				DateTime overlapEnd = new List<DateTime> { interest.End, balance.End }.Min();
-				int days = (overlapEnd - overlapStart).Days;
+				int days = (overlapEnd - overlapStart).Days + 1;
 
 				decimal amount = balance.Balance * (interest.InterestRate / 100) * days;
 				amount /= 365;
