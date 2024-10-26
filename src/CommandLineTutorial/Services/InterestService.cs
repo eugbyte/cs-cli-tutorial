@@ -40,8 +40,8 @@ public class InterestService : IInterestService {
 
 	public decimal CalculateInterest(IList<TransactionInfo> transactions, DateTime start, DateTime end) {
 		List<BalanceInfo> balances = [];
+		// convert TransactionInfo that fall within the start and end date into BalanceInfo intervals
 		for (int i = 0; i < transactions.Count; i++) {
-			TransactionInfo transactionInfo = transactions[i];
 			if (start <= transactions[i].Date && transactions[i].Date <= end) {
 				DateTime _start = transactions[i].Date;
 				DateTime _end = end;
@@ -52,6 +52,7 @@ public class InterestService : IInterestService {
 			}
 		}
 
+		// Filter InterestInfo intervals that fall within the start and end date
 		List<InterestInfo> interestInfos = interests
 			.Values
 			.Where((v) => v.Start <= end && start <= v.End)
