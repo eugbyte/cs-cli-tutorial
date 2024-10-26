@@ -41,7 +41,7 @@ public class TestInterestService {
 	}
 
 	[Fact]
-	public void Calculated_Interest_2_IR_Overlaps() {
+	public void Calculated_Interest_Two_IR_Overlaps() {
 		InterestService interestService = new();
 
 		DateTime start = new(year: 2024, month: 6, day: 1);
@@ -62,7 +62,7 @@ public class TestInterestService {
 	}
 
 	[Fact]
-	public void Calculated_Interest_2_Balance_Overlaps() {
+	public void Calculated_Interest_Two_Balance_Overlaps() {
 		InterestService interestService = new();
 
 		DateTime start = new(year: 2024, month: 6, day: 1);
@@ -81,7 +81,7 @@ public class TestInterestService {
 	}
 
 	[Fact]
-	public void Calculated_Interest_3_Overlaps() {
+	public void Calculated_Interest_Three_Overlaps() {
 		InterestService interestService = new();
 
 		DateTime start = new(year: 2024, month: 6, day: 1);

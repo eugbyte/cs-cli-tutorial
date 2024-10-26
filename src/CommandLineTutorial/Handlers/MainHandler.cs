@@ -18,24 +18,29 @@ Welcome to Awesome Bank! What would you like to do?
 [Q] Quit");
 
 			string input = (Console.ReadLine() ?? "").ToUpper();
-			switch (input) {
-				case "T":
-					ProcessTransaction();
-					break;
-				case "Q":
-					shouldRun = false;
-					Console.WriteLine("Thank you for banking with Awesome Bank.\r\nHave a nice day!");
-					break;
-				case "I":
-					ProcessInterest();
-					break;
-				case "P":
-					ProcessSummary();
-					break;
-				default:
-					continue;
-			}
-
+			try {
+				switch (input) {
+					case "T":
+						ProcessTransaction();
+						break;
+					case "Q":
+						shouldRun = false;
+						Console.WriteLine("Thank you for banking with Awesome Bank.\r\nHave a nice day!");
+						break;
+					case "I":
+						ProcessInterest();
+						break;
+					case "P":
+						ProcessSummary();
+						break;
+					default:
+						continue;
+				}
+			} catch (Exception ex) { 
+				Console.WriteLine($"An error occured: {ex.Message}");
+				Console.WriteLine("Returning to main menu");
+				continue;
+			}		
 		}
 	}
 
