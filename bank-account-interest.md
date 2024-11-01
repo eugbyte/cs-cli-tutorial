@@ -96,6 +96,8 @@ Is there anything else you'd like to do?
 >
 ```
 
+AwesomeGIC Bank GIC event sourcing ddd
+
 ## Print Statement
 Upon selecting Print statement option, application prompts user to select which account to print the statement for:
 
